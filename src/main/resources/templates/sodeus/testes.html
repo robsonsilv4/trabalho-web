@@ -1,0 +1,32 @@
+<div sec:authorize="isAuthenticated()">
+    <p>[[${#authentication.principal.usuario.nome}]]</p>
+    <a th:href="@{/user/carrinho}">Compras</a>
+    <a th:href="@{/logout}">Sair</a>
+</div>
+
+<div sec:authorize="isAnonymous()">
+    <a th:href="@{/login}">Entre</a>
+    ou
+    <a th:href="@{/cadastro}">Cadastre-se</a>
+</div>
+
+<!-- Inicio -->
+
+<div class="container">
+    <h4 class="title-text">Lançamentos</h4>
+    <div class="slick-slider" data-slick='{"slidesToShow": 5, "slidesToScroll": 1}'>
+        <div class="item-slide p-2" th:each="produto : ${produtos}">
+            <figure class="card card-product">
+                <span class="badge-new">NOVO </span>
+                <h6 class="title text-truncate">
+                    <a th:href="@{/produto/{id}(id = ${produto.id})}" th:text="${produto.nome}"></a>
+                </h6>
+            </figure>
+        </div>
+    </div>
+
+    <div class="alert alert-secondary" th:if="${#lists.isEmpty(produtos)}">
+        <div>Nenhum produto encontrado</div>
+    </div>
+    <p>Reprovações: i++</p>
+</div>

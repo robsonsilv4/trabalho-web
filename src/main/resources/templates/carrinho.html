@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Produtos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div th:replace="/fragments/header :: header"></div>
+
+    <div class="container">
+        <h2>Carrinho:</h2>
+
+        <div th:each="produto : ${produtos}">
+            <div th:if="${produtos == null}">
+                <p>Sem</p>
+            </div>
+            
+            <h4>
+                <a th:text="${produto.getNome()}" th:href="@{'/produtos/' + ${produto.getId()}}"></a>
+            </h4>
+            <div th:inline="text">Preço: [[${produto.getPreco()}]] $</div>
+            <div th:inline="text">Quantidade: [[${produto.getQuantidade}]]</div>
+            <a th:href="@{'/carrinho/remover/{id}'(id=${produto.getId})}">
+                <button type="button" class="btn btn-primary">Remover</button>
+            </a>
+
+            <h2 class="col-md-11" th:inline="text">Total: [[${total}]]</h2>
+        </div>
+
+    </div>
+</body>
+
+</html>
